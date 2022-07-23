@@ -12,6 +12,11 @@ h1 {
     font-size: 5rem;
 }
 
+p {
+    font-size: 3rem;
+    color: blue;
+}
+
 body {
     height: 100vh;
     background-color: rgb(255, 255, 0);
@@ -22,7 +27,14 @@ body {
     align-items: center;
 }
 
-#video {
- height: 70%;
- width: 80%;
+.game-board {
+    display: grid;
+    grid-template-columns: 100px 100px 100px;
+    grid-template-rows: 100px 100px 100px;
+    background-color: beige;
+}
+
+.game-square {
+    height: 100%;
+    border: 1px solid gray;
 }
