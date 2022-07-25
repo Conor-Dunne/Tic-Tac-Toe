@@ -35,6 +35,10 @@ body {
 }
 
 .game-square {
+    display: grid;
+    place-items: center;
+    align-items: center;
+    font-size: 6rem;
     height: 100%;
     border: 1px solid gray;
 }
