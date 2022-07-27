@@ -1,13 +1,37 @@
 
 
 const gameBoard = (() => {
+    const msgBox = document.getElementById("msg-box");
     const winningCombos = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7], [2, 5, 8], [3, 6, 9], [1, 5, 9], [7, 5, 3]];
-    const usedSquares = [];
+    let usedSquares = [];
     const checkIfWin = (array, name) => {
-        const winCheck = [];
+        let winCheck = [];
+        const stopGame = () => {
+            msgBox.textContent =`${name} wins!`;
+            allSquares.forEach(sq => sq.removeEventListener("click", go));
+            restartGame();
+            player1.restart();
+            player2.restart();
+            playGame();
+        }
+        const continueGame = () => {
+            msgBox.textContent = "Nice move!";
+            setTimeout(() => msgBox.textContent = `Next turn...${playGame.getPlayerName()}`, 1000);
+        }
         winningCombos.forEach(arr => winCheck.push(arr.every(i => array.includes(i))));
-        return winCheck.includes(true) ? alert(`${name} wins!`) : alert("Nice move");
+        winCheck.includes(true) ? stopGame() : continueGame();
+        
     }
+        const restartGame = () => {
+            usedSquares = [];
+            winCheck = [];
+            setTimeout(() => allSquares.forEach(sq => sq.textContent = ""), 1000);
+            setTimeout(() => msgBox.textContent = "Let's go again!", 1000);
+            allSquares.forEach(sq => sq.addEventListener("click", go));
+
+        }
+    
+
     const placeMarker = (marker, squareNum) => {
         if (usedSquares.includes(squareNum)) { alert("Please choose another square"); };
         document.getElementById(squareNum).textContent = marker;
@@ -23,17 +47,20 @@ const gameBoard = (() => {
 })();
 
 const Player = (name, marker) => {
-    const playerSquares = [];
-    // const getName = () => name;
+    let playerSquares = [];
+    const getName = () => name;
     // const getMarker = () => marker;
     const takeTurn = (marker, square) => {
         playerSquares.push(square);
         gameBoard.placeMarker(marker, square);
         gameBoard.checkIfWin(playerSquares, name);
 
-    }
+    };
+    const restart = () => {
+        playerSquares = [];
+    };
 
-    return { takeTurn };
+    return { takeTurn, restart, getName };
 };
 
 const player1 = Player("Player X", "X");
@@ -51,13 +78,16 @@ const playGame = (() => {
             currentPlayer = player1;
             marker = "X"
         };
-    }
+    };
     const playerMove = (num) => {
         currentPlayer.takeTurn(marker, num);
         switchPlayer();
-    }
+    };
+    const getPlayerName = () => {
+        return currentPlayer.getName()
+    };
 
-    return { playerMove };
+    return { playerMove, getPlayerName };
 
 })();
 
@@ -65,7 +95,7 @@ const playGame = (() => {
 const allSquares = Array.from(document.querySelectorAll(".game-square"));
 console.log(allSquares);
 
-allSquares.forEach(sq => sq.addEventListener("click", go))
+allSquares.forEach(sq => sq.addEventListener("click", go));
 
 function go() {
     let num = Number(this.id);
