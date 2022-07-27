@@ -1,6 +1,10 @@
 @font-face {
-    font-family:"retro" ;
+    font-family: "retro";
     src: url(./fonts/8801-DKnR.ttf);
+}
+
+:root {
+   --text-color:  rgb(0 255 55 / 44%);
 }
 
 * {
@@ -10,44 +14,67 @@
 }
 
 html {
-    font-size: 10px;
+    font-size : clamp(6px, 3vw, 30px);
 }
 
 h1 {
-    font-size: 5rem;
-    margin-top: 90px;
+    margin-top: 25%;
 }
 
 p {
-    font-size: 3rem;
-    color: blue;
 }
 
 body {
+    color: var(--text-color);
     font-family: "retro";
+    background-color: rgb(54, 54, 54);
     height: 100vh;
-    background-color: rgb(255, 255, 0);
-    color: rgb(255, 32, 207);
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    min-height: 333px;
+    max-width:  720px;
+}
+
+.game-screen {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    width: 90%;
+    height: 100%;
+    padding: 10px;
+    background-image: url(./images/jason-leung-VeUSCLJrLf4-unsplash.jpg);
+    background-repeat: no-repeat;
+    background-size: 100%;
+    border-radius: 10px;
+    
+}
+
+.game-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 70%;
+    height: 80%;
 }
 
 .game-board {
     display: grid;
-    grid-template-columns: 100px 100px 100px;
-    grid-template-rows: 100px 100px 100px;
-    background-color: beige;
+    width: 80%;
+    justify-content: center;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 5vw);
+    background-color: rgba(0, 0, 0, 0);
 }
 
 .game-square {
     display: grid;
     place-items: center;
     align-items: center;
-    font-size: 6rem;
     height: 100%;
-    border: 1px solid gray;
+    border: 1px solid rgba(128, 128, 128, 0.24);
 }
 
 .msg-box-wrapper {
