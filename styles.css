@@ -1,3 +1,8 @@
+@font-face {
+    font-family:"retro" ;
+    src: url(./fonts/8801-DKnR.ttf);
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -10,6 +15,7 @@ html {
 
 h1 {
     font-size: 5rem;
+    margin-top: 90px;
 }
 
 p {
@@ -18,12 +24,13 @@ p {
 }
 
 body {
+    font-family: "retro";
     height: 100vh;
     background-color: rgb(255, 255, 0);
     color: rgb(255, 32, 207);
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
 }
 
@@ -41,4 +48,8 @@ body {
     font-size: 6rem;
     height: 100%;
     border: 1px solid gray;
+}
+
+.msg-box-wrapper {
+    padding: 30px;
 }
