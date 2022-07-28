@@ -14,7 +14,7 @@
 }
 
 html {
-    font-size: clamp(6px, 4vw, 50px);
+    font-size: clamp(6px, 4vw, 20px);
 
 }
 
@@ -39,7 +39,6 @@ body {
 
 .container {
     width: 100%;
-    /* max-width: 600px; */
     height: 100%;
     display: flex;
     justify-content: center;
@@ -73,7 +72,7 @@ body {
     display: grid;
     width: 80%;
     justify-content: center;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(3, 9vw);
     grid-template-rows: repeat(3, 6vw);
     background-color: rgba(0, 0, 0, 0);
 }
@@ -83,7 +82,8 @@ body {
     place-items: center;
     align-items: center;
     height: 100%;
-    border: 1px solid var(--text-color)
+    border: 1px solid var(--text-color);
+    font-size: clamp(1rem, 3vw, 3rem);
 }
 
 .msg-box-wrapper {
