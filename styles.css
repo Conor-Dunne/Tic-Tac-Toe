@@ -14,7 +14,8 @@
 }
 
 html {
-    font-size : clamp(6px, 3vw, 30px);
+    font-size : clamp(6px, 4vw, 20px);
+
 }
 
 h1 {
@@ -33,20 +34,30 @@ body {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    min-height: 333px;
-    max-width:  720px;
+}
+
+.container {
+    width: 80%;
+    max-width: 600px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .game-screen {
-    margin-top: 20px;
+    /* margin-top: 20px; */
+    width: 100%;
+    min-height: 400px;
+    margin-bottom: 10px;
     display: flex;
     justify-content: center;
-    width: 90%;
-    height: 100%;
+    align-items: center;
     padding: 10px;
     background-image: url(./images/jason-leung-VeUSCLJrLf4-unsplash.jpg);
     background-repeat: no-repeat;
-    background-size: 100%;
+    background-size: contain;
+    background-position: center;
     border-radius: 10px;
     
 }
@@ -55,9 +66,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
-    width: 70%;
-    height: 80%;
+    
 }
 
 .game-board {
@@ -65,7 +74,7 @@ body {
     width: 80%;
     justify-content: center;
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(3, 5vw);
+    grid-template-rows: repeat(3, 3vw);
     background-color: rgba(0, 0, 0, 0);
 }
 
@@ -78,5 +87,5 @@ body {
 }
 
 .msg-box-wrapper {
-    padding: 30px;
+    padding: 10px;
 }
