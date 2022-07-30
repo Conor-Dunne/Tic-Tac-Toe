@@ -23,7 +23,9 @@ const gameBoard = (() => {
 
         if (winCheck.includes(true)) {
             message = `${name} wins!`;
+            winSound.play();
             stopGame()
+            
         } else if (usedSquares.length == 9) {
             message = "It's a draw!"
             stopGame()
@@ -84,9 +86,11 @@ const playGame = (() => {
         if (currentPlayer == player1) {
             currentPlayer = player2;
             marker = "O";
+            p2sound.play();
         } else {
             currentPlayer = player1;
             marker = "X"
+            p1sound.play();
         };
     };
     const playerMove = (num) => {
@@ -103,7 +107,10 @@ const playGame = (() => {
 
 
 const allSquares = Array.from(document.querySelectorAll(".game-square"));
-console.log(allSquares);
+const p1sound = new Audio("./sounds/366102__original-sound__confirmation-upward (1).wav");
+const p2sound = new Audio("./sounds/366104__original-sound__confirmation-downward.wav");
+const winSound = new Audio("./sounds/495005__evretro__win-video-game-sound.wav");
+
 
 allSquares.forEach(sq => sq.addEventListener("click", go));
 
