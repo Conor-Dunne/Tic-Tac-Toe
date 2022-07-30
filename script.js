@@ -6,8 +6,9 @@ const gameBoard = (() => {
     let usedSquares = [];
     const checkIfWin = (array, name) => {
         let winCheck = [];
+        let message = "";
         const stopGame = () => {
-            msgBox.textContent =`${name} wins!`;
+            msgBox.textContent = message;
             allSquares.forEach(sq => sq.removeEventListener("click", go));
             restartGame();
             player1.restart();
@@ -19,14 +20,23 @@ const gameBoard = (() => {
             setTimeout(() => msgBox.textContent = `Next turn...${playGame.getPlayerName()}`, 1000);
         }
         winningCombos.forEach(arr => winCheck.push(arr.every(i => array.includes(i))));
+
+        if (winCheck.includes(true)) {
+            message = `${name} wins!`;
+            stopGame()
+        } else if (usedSquares.length == 9) {
+            message = "It's a draw!"
+            stopGame()
+        } else continueGame ();
+
         winCheck.includes(true) ? stopGame() : continueGame();
         
     }
         const restartGame = () => {
             usedSquares = [];
             winCheck = [];
-            setTimeout(() => allSquares.forEach(sq => sq.textContent = ""), 1000);
-            setTimeout(() => msgBox.textContent = "Let's go again!", 1000);
+            setTimeout(() => allSquares.forEach(sq => sq.textContent = ""), 5000);
+            setTimeout(() => msgBox.textContent = "Let's go again!", 3000);
             allSquares.forEach(sq => sq.addEventListener("click", go));
 
         }
