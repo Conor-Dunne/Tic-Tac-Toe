@@ -55,8 +55,43 @@ body {
     background-size: contain;
     background-position: center;
     border-radius: 10px;
+    filter: blur(20px);
 
 }
+
+
+.start-screen {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%;
+    background-color: black;
+    font-size: 3rem;
+    opacity: 80%;
+}
+
+.menu-btn:hover {
+    cursor: pointer;
+}
+
+.blink {
+    color: rgb(0 255 56);
+    animation: blink-animation 3s steps(5, start) infinite;
+  }
+
+  @keyframes blink-animation {
+    to {
+      visibility: hidden;
+    }
+  }
+  
+
+
 
 .game-content {
     margin-top: 35px;
@@ -111,6 +146,17 @@ body {
    {
     border-bottom: none;
   }
+
+  .hide-content {
+    display: none;
+  }
+
+  .show-content {
+    display: block;
+  }
+
+
+  
 
 
 @media only screen and (min-width: 1000px) {

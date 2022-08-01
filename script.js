@@ -105,11 +105,17 @@ const playGame = (() => {
 
 })();
 
-
+const startBtn = document.querySelector("#start-btn");
+const gameScreen = document.querySelector(".game-screen");
+const startScreen = document.querySelector(".start-screen");
 const allSquares = Array.from(document.querySelectorAll(".game-square"));
 const p1sound = new Audio("./sounds/366102__original-sound__confirmation-upward (1).wav");
 const p2sound = new Audio("./sounds/366104__original-sound__confirmation-downward.wav");
 const winSound = new Audio("./sounds/495005__evretro__win-video-game-sound.wav");
+const startApp = () => {
+    startScreen.classList.add("hide-content");
+    gameScreen.style.filter = "none";
+}
 
 
 allSquares.forEach(sq => sq.addEventListener("click", go));
@@ -119,25 +125,12 @@ function go() {
     playGame.playerMove(num);
 }
 
+startBtn.addEventListener("click", startApp);
 
 
 
-// ##GAMEBOARD:
-// --place markers on gameBoard
-// --log used squares and prevent choosing same square twice
-// --log players chosen squares
-// --check for winning move
 
 
-//##Player
-//--make new players / assign names
-//--assign X or O to player
-//--choose square to place marker by click
-
-//##gameflow
-//--decide who's turn it is
-//display game info on DOM (WInner, etc)
-//--end / restart / start game functions
 
 
 
