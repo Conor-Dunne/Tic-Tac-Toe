@@ -1,6 +1,7 @@
 
-let gameMode = "playerVcomp";
-let availableSquares = [1,2,3,4,5,6,7,8,9];
+let gameMode = "";
+let availableSquares = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+let doubleSelection = false;
 
 
 const gameBoard = (() => {
@@ -9,7 +10,6 @@ const gameBoard = (() => {
     let usedSquares = [];
     const removeSquare = (sq) => {
         const index = availableSquares.indexOf(sq);
-        console.log(`index of sq to be removed = ${sq}`)
         availableSquares.splice(index, 1);
     }
     const checkIfWin = (array, name) => {
@@ -25,8 +25,10 @@ const gameBoard = (() => {
             playGame();
         }
         const continueGame = () => {
+            allSquares.forEach(sq => sq.removeEventListener("click", go));
             msgBox.textContent = "Nice move!";
             setTimeout(() => msgBox.textContent = `Next turn...${playGame.getPlayerName()}`, 1000);
+            setTimeout(()=>allSquares.forEach(sq => sq.addEventListener("click", go)), 2000)
         }
         winningCombos.forEach(arr => winCheck.push(arr.every(i => array.includes(i))));
 
@@ -34,30 +36,36 @@ const gameBoard = (() => {
             message = `${name} wins!`;
             winSound.play();
             stopGame()
-            
+
         } else if (usedSquares.length == 9) {
             message = "It's a draw!"
             stopGame()
-        } else continueGame ();
+        } else continueGame();
 
-        winCheck.includes(true) ? stopGame() : continueGame();
-        
+
     }
-        const restartGame = () => {    
-            setTimeout(() => allSquares.forEach(sq => sq.textContent = ""), 5000);
-            setTimeout(() => msgBox.textContent = "Let's go again!", 3000);
-            allSquares.forEach(sq => sq.addEventListener("click", go));
-            availableSquares = [1,2,3,4,5,6,7,8,9];
-            console.log(`restarted avail sqs = ${availableSquares}`);
-            usedSquares = [];
-            winCheck = [];       
-        }
-    
+    const restartGame = () => {
+        setTimeout(() => allSquares.forEach(sq => sq.textContent = ""), 5000);
+        setTimeout(() => msgBox.textContent = "Let's go again!", 3000);
+        setTimeout(() => msgBox.textContent = `Next turn...${playGame.getPlayerName()}`, 1000);
+        allSquares.forEach(sq => sq.addEventListener("click", go));
+        availableSquares = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+        usedSquares = [];
+        winCheck = [];
+    }
 
-    const placeMarker = (marker, squareNum) => {
-        if (usedSquares.includes(squareNum)) { alert("Please choose another square"); };
-        document.getElementById(squareNum).textContent = marker;
-        usedSquares.push(squareNum);
+
+    const placeMarker = (marker, squareNum) => { //must fix issue of not restarting curr move
+        if (usedSquares.includes(squareNum)) {
+            doubleSelection = true;
+            msgBox.textContent = "Try again";
+            return;
+        } else {
+            doubleSelection = false;
+            document.getElementById(squareNum).textContent = marker;
+            usedSquares.push(squareNum);
+        }
+
     };
 
     return {
@@ -73,24 +81,26 @@ const Player = (name, marker) => {
     const getName = () => name;
     // const getMarker = () => marker;
     const takeTurn = (marker, square) => {
-        playerSquares.push(square);
-        gameBoard.removeSquare(square);
         gameBoard.placeMarker(marker, square);
+        if (doubleSelection == true) {
+            return;
+        } else
+            playerSquares.push(square);
+        gameBoard.removeSquare(square);
         gameBoard.checkIfWin(playerSquares, name);
 
     };
 
     const getRandomSquare = () => {
-        let randNum = Math.floor(Math.random()* ((availableSquares.length-1) -0) + 0);
+        let randNum = Math.floor(Math.random() * ((availableSquares.length - 1) - 0) + 0);
         return availableSquares[randNum];
     }
-
 
     const restart = () => {
         playerSquares = [];
     };
 
-    return { takeTurn, restart, getName, getRandomSquare};
+    return { takeTurn, restart, getName, getRandomSquare };
 };
 
 const player1 = Player("Player X", "X");
@@ -102,9 +112,9 @@ const playGame = (() => {
     let otherPLayer = ""
     let marker = "X";
 
-    gameMode == "playerVcomp" ? otherPLayer = computer : otherPLayer = player2;
 
     const switchPlayer = () => {
+        gameMode == "playerVcomp" ? otherPLayer = computer : otherPLayer = player2;
         if (currentPlayer == player1) {
             currentPlayer = otherPLayer;
             marker = "O";
@@ -115,11 +125,15 @@ const playGame = (() => {
             marker = "X"
             p1sound.play();
         };
-        setTimeout( () => computerMove(), 3000);
+        if (otherPLayer == computer) {
+            setTimeout(() => computerMove(), 3000);
+        };
     };
     const playerMove = (num) => {
         currentPlayer.takeTurn(marker, num);
-        switchPlayer();
+        if (doubleSelection == true) {
+            return;
+        } else switchPlayer();
     };
 
     const computerMove = () => {
@@ -139,32 +153,40 @@ const playGame = (() => {
 
 
 
-    
+
 
 
 const startBtn = document.querySelector("#start-btn");
 const gameScreen = document.querySelector(".game-screen");
-const startScreen = document.querySelector(".start-screen");
+const startGameScreen = document.querySelector("#start-game");
+const gameModeScreen = document.querySelector("#game-mode");
+const vsComputer = document.querySelector("#vsComp");
+const vsPlayer = document.querySelector("#vsPlayer");
 const allSquares = Array.from(document.querySelectorAll(".game-square"));
 const p1sound = new Audio("./sounds/366102__original-sound__confirmation-upward (1).wav");
 const p2sound = new Audio("./sounds/366104__original-sound__confirmation-downward.wav");
 const winSound = new Audio("./sounds/495005__evretro__win-video-game-sound.wav");
 const startApp = () => {
-    startScreen.classList.add("hide-content");
-    gameScreen.style.filter = "none";
+    startGameScreen.classList.add("hide-content");
+    gameModeScreen.classList.remove("hide-content");
 }
 
+const selectGameMode = (e) => {
+    e.target.id === "vsComp" ? gameMode = "playerVcomp" : gameMode = "playerVplayer";
+    gameModeScreen.classList.add("hide-content");
+    gameScreen.style.filter = "none";
+}
 
 allSquares.forEach(sq => sq.addEventListener("click", go));
 
 function go() {
     let num = Number(this.id);
     playGame.playerMove(num);
-    console.log(`Player 1 chose ${num}`);
 }
 
 startBtn.addEventListener("click", startApp);
-
+vsComputer.addEventListener("click", selectGameMode);
+vsPlayer.addEventListener("click", selectGameMode);
 
 
 

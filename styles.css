@@ -62,8 +62,10 @@ body {
 
 .start-screen {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    text-align: center;
     z-index: 1;
     position: fixed;
     left: 0;
@@ -73,6 +75,14 @@ body {
     background-color: black;
     font-size: 3rem;
     opacity: 80%;
+}
+
+#game-mode h1 {
+    font-size: 2.5rem;
+    margin: 0;
+    line-height: 3;
+    color: rgb(0 255 56);
+
 }
 
 .menu-btn:hover {
@@ -118,6 +128,10 @@ body {
     height: 100%;
     border: 1px solid var(--text-color);
     /* font-size: clamp(1rem, 3vw, 3rem); */
+}
+
+.game-square:hover {
+    cursor: pointer;
 }
 
 .msg-box-wrapper {
